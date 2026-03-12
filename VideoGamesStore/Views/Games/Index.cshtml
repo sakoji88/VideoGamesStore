@@ -97,7 +97,7 @@
 
                             @if (User.IsInRole("Admin"))
                             {
-                                <a asp-action="Edit" asp-route-id="@game.Id" class="btn btn-success">Редактировать</a>
+                                <a asp-action="Edit" asp-route-id="@game.Id" class="btn btn-warning fw-semibold">✏️ Редактировать игру</a>
                                 <a asp-action="Delete" asp-route-id="@game.Id" class="btn btn-outline-danger">Удалить</a>
                             }
                         </div>
