@@ -29,6 +29,16 @@ body {
   background: linear-gradient(135deg, #5b35d5 0%, #0d6efd 100%);
 }
 
+body {
+  background: #f5f7fb;
+  min-height: 100vh;
+  margin: 0;
+}
+
+.hero-block {
+  background: linear-gradient(135deg, #5b35d5 0%, #0d6efd 100%);
+}
+
 .game-card {
   border: 0;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
