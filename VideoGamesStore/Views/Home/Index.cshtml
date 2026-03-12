@@ -1,33 +1,41 @@
-﻿@model IEnumerable<VideoGamesStore.Models.Game>
+@model IEnumerable<VideoGamesStore.Models.Game>
 
 @{
     ViewData["Title"] = "Главная";
 }
 
-<h1>Каталог игр</h1>
+<section class="p-4 p-md-5 mb-4 rounded-3 hero-block text-white">
+    <div class="col-lg-8 px-0">
+        <h1 class="display-6 fw-bold">Добро пожаловать в VideoGamesStore</h1>
+        <p class="lead mb-4">Покупайте популярные игры для любимых платформ по выгодным ценам.</p>
+        <a asp-controller="Games" asp-action="Index" class="btn btn-light btn-lg">Смотреть каталог</a>
+    </div>
+</section>
 
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>Название</th>
-            <th>Жанр</th>
-            <th>Издатель</th>
-            <th>Цена</th>
-            <th>Остаток</th>
-            <th>Рейтинг</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var game in Model)
-        {
-            <tr>
-                <td>@game.Title</td>
-                <td>@game.Genre?.Name</td>
-                <td>@game.Publisher?.Name</td>
-                <td>@game.Price</td>
-                <td>@game.Stock</td>
-                <td>@game.Rating</td>
-            </tr>
-        }
-    </tbody>
-</table>
+<h2 class="mb-3">Популярные игры</h2>
+<div class="row">
+    @foreach (var game in Model.Take(6))
+    {
+        <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card h-100 shadow-sm game-card">
+                @if (!string.IsNullOrWhiteSpace(game.CoverImageUrl))
+                {
+                    <img src="@game.CoverImageUrl" class="card-img-top" alt="@game.Title" style="height: 250px; object-fit: cover;" />
+                }
+                <div class="card-body d-flex flex-column">
+                    <h5 class="card-title">@game.Title</h5>
+                    <p class="card-text text-muted mb-1">@game.Genre?.Name</p>
+                    <p class="fw-bold mb-3">@game.Price.ToString("0.00") ₽</p>
+                    <div class="mt-auto d-flex gap-2">
+                        <a asp-controller="Games" asp-action="Details" asp-route-id="@game.Id" class="btn btn-primary flex-fill">Подробнее</a>
+                        <form asp-controller="Cart" asp-action="Add" method="post" class="flex-fill">
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="gameId" value="@game.Id" />
+                            <button type="submit" class="btn btn-outline-primary w-100">В корзину</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>

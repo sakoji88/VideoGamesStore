@@ -64,8 +64,17 @@
                 </p>
             </div>
 
-            <div class="mt-4">
+                        <div class="mt-4 d-flex gap-2 flex-wrap">
                 <a asp-action="Index" class="btn btn-secondary">Назад к каталогу</a>
+                <form asp-controller="Cart" asp-action="Add" method="post">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" name="gameId" value="@Model.Id" />
+                    <button type="submit" class="btn btn-primary">В корзину</button>
+                </form>
+                @if (User.IsInRole("Admin"))
+                {
+                    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-success">Редактировать</a>
+                }
             </div>
         </div>
     </div>
